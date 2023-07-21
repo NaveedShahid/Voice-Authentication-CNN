@@ -1,6 +1,12 @@
 # Voice-Authentication-CNN
 A simple Voice Authentication system using pre-trained Convolutional Neural Network.
 
+## Install:
+```
+git clone https://github.com/drago314/Voice-Authentication-CNN.git
+pip install -r requirements.txt
+```
+
 ## Enrollment:
 Enroll a new user using an audio file of his/her voice
 
