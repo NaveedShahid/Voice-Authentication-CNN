@@ -1,10 +1,18 @@
 import os
 #import voice_auth
 
-wavs = 'Testing Audio Wav'
+wavs = 'Testing Audio Wav\Avrick'
+output = 'Output\\avrick.txt'
 
 if (not os.path.exists(wavs)):
     print("No Audio To Test")
     exit()
 
-print(voice_auth.recognize(".\Testing Audio Wav\Lucas\Lucas (Sick)_\\2A SHTEM Voice Sentence.wav"))
+if (not os.path.exists(output)):
+    file = open(output, "w")
+    file.close()
+
+for subdir, dirs, files in os.walk(wavs):
+    for file in files:
+        filePath = subdir + "\\" + file
+        os.system(f"python voice_auth.py -t recognize -f \".\{filePath}\" -o \".\{output}\"")

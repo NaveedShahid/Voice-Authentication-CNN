@@ -35,6 +35,10 @@ def args():
                         help='Specify the audio file you want to enroll',
                         type=lambda fn:file_choices(("csv","wav","flac"),fn),
                        required=True)
+    parser.add_argument('-o', '--output', 
+                        help='Specify the output file you want the person regonized to be printed to',
+                        type=lambda fn:file_choices(("txt"),fn),
+                        required=False)
     ret = parser.parse_args()
     return ret
 
@@ -100,7 +104,7 @@ def recognize(file):
     
     if os.path.exists(p.EMBED_LIST_FILE):
         embeds = os.listdir(p.EMBED_LIST_FILE)
-    if len(embeds) is 0:
+    if len(embeds) == 0:
         print("No enrolled users found")
         exit()
     print("Loading model weights from [{}]....".format(p.MODEL_FILE))
@@ -123,6 +127,11 @@ def recognize(file):
         distances.update({speaker:distance})
     if min(list(distances.values()))<p.THRESHOLD:
         print("Recognized: ",min(distances, key=distances.get))
+        if (args.output is not None):
+            output = open(args.output, "a")
+            output.write(min(distances, key=distances.get))
+            output.write("\n")
+            output.close()
     else:
         print("Could not identify the user, try enrolling again with a clear voice sample")
         print("Score: ",min(list(distances.values())))
