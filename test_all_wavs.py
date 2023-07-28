@@ -1,8 +1,8 @@
 import os
 #import voice_auth
 
-wavs = 'Testing Audio Wav\Avrick'
-output = 'Output\\avrick.txt'
+wavs = 'Testing Audio Wav\\Yan'
+output = 'Output\\Yan1.txt'
 
 if (not os.path.exists(wavs)):
     print("No Audio To Test")

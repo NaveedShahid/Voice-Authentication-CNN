@@ -56,13 +56,13 @@ def enroll(name,file):
         print("Failed to load weights from the weights file, please ensure *.pb file is present in the MODEL_FILE directory")
         exit()
     
-    try:
-        print("Processing enroll sample....")
-        enroll_result = get_embedding(model, file, p.MAX_SEC)
-        enroll_embs = np.array(enroll_result.tolist())
-        speaker = name
-    except:
-        print("Error processing the input audio file. Make sure the path.")
+   # try:
+    print("Processing enroll sample....")
+    enroll_result = get_embedding(model, file, p.MAX_SEC)
+    enroll_embs = np.array(enroll_result.tolist())
+    speaker = name
+   # except:
+   #     print("Error processing the input audio file. Make sure the path.")
     try:
         np.save(os.path.join(p.EMBED_LIST_FILE,speaker +".npy"), enroll_embs)
         print("Succesfully enrolled the user")
