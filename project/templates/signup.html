@@ -11,7 +11,7 @@
         </div>
         {% endif %}
         {% endwith %}
-        <form method="POST" action="/signup">
+        <form method="POST" action="/signup" enctype=multipart/form-data>
             <div class="field">
                 <div class="control">
                     <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
@@ -30,6 +30,13 @@
                 </div>
             </div>
 
+            <p class="large-text">Upload Audio Recording of Your Voice</p>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input" type=file name=file>
+                </div>
+            </div>
             <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
         </form>
     </div>
