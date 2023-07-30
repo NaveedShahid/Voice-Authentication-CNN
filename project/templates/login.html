@@ -11,10 +11,10 @@
         </div>
         {% endif %}
         {% endwith %}
-        <form method="POST" action="/login">
+        <form method="POST" action="/login" enctype=multipart/form-data>
             <div class="field">
                 <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+                    <input class="input is-large" type="username" name="username" placeholder="Your Username" autofocus="">
                 </div>
             </div>
 
@@ -23,6 +23,17 @@
                     <input class="input is-large" type="password" name="password" placeholder="Your Password">
                 </div>
             </div>
+
+            <p class="large-text">Create and upload an audio recording of your voice reading the sentence below to verify your identity.</p>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "The quick brown fox jumped over the lazy dog."</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type="file" name="file">
+                </div>
+            </div>
+
             <div class="field">
                 <label class="checkbox">
                     <input type="checkbox" name="remember">

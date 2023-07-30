@@ -7,11 +7,15 @@ from flask_login import login_user, login_required, logout_user
 import os
 import pathlib
 
-from project.backend import enroll_user
+from project.backend import enroll_user, authenticate_user
 
 auth = Blueprint('auth', __name__)
 UPLOAD_FOLDER = 'project/uploads'
 ALLOWED_EXTENSIONS = {'wav', 'm4a', 'mp3'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @auth.route('/login')
 def login():
@@ -20,17 +24,40 @@ def login():
 @auth.route('/login', methods=['POST'])
 def login_post():
     # login code goes here
-    email = request.form.get('email')
+    username = request.form.get('username')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(name=username).first()
 
     # check if the user actually exists
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
+    
+
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    # If the user does not select a file, the browser submits an
+    # empty file without a filename.
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
+    else:
+        flash('Error Uploading File')
+        return redirect(request.url)
+
+    #Perform Voice Biometrics on File
+    if (not authenticate_user(username, os.path.join(UPLOAD_FOLDER, filename))):
+        flash(f'This Audio Recording was not verified as your voice. Please create a new clip and resubmit. Keep in mind, our beta voice biomteric only has 90% accuracy')
+        return redirect(request.url)
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
@@ -39,10 +66,6 @@ def login_post():
 @auth.route('/signup')
 def signup():
     return render_template('signup.html')
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @auth.route('/signup',  methods=['POST'])
 def signup_post():
@@ -56,7 +79,7 @@ def signup_post():
         flash('Username address already exists')
         return redirect(url_for('auth.signup'))
 
-    # check if the post request has the file part
+    # Enroll all submitted files into the AI
     for i, f in enumerate(request.files):
         file = request.files[f]
         if file.filename == '':

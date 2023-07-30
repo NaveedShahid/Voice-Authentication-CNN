@@ -127,11 +127,15 @@ def recognize(file):
         distances.update({speaker:distance})
     if min(list(distances.values()))<p.THRESHOLD:
         print("Recognized: ",min(distances, key=distances.get))
+        """
         if (args.output is not None):
             output = open(args.output, "a")
             output.write(min(distances, key=distances.get))
             output.write("\n")
             output.close()
+        else:
+        """
+        return min(distances, key=distances.get)
     else:
         print("Could not identify the user, try enrolling again with a clear voice sample")
         print("Score: ",min(list(distances.values())))
