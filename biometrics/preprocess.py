@@ -3,7 +3,7 @@ import numpy as np
 from scipy.signal import lfilter, butter
 from python_speech_features import sigproc
 
-import parameters as p
+import biometrics.parameters as p
 
 
 def load(filename, sample_rate):

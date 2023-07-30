@@ -17,9 +17,9 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # FATAL
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
 #IMPORT USER-DEFINED FUNCTIONS
-from feature_extraction import get_embedding, get_embeddings_from_list_file
-from preprocess import get_fft_spectrum
-import parameters as p
+from biometrics.feature_extraction import get_embedding, get_embeddings_from_list_file
+from biometrics.preprocess import get_fft_spectrum
+import biometrics.parameters as p
 
 # args() returns the args passed to the script
 def args():

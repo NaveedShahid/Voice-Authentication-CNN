@@ -1,0 +1,22 @@
+import os
+from pydub import AudioSegment
+import pathlib
+
+from biometrics.voice_auth import enroll
+
+def enroll_user(username, audioFilePath):
+    if (pathlib.Path(audioFilePath).suffix == ".mp3"):
+        audio = AudioSegment.from_file(audioFilePath, format="mp3")
+    elif (pathlib.Path(audioFilePath).suffix == ".m4a"):
+        audio = AudioSegment.from_file(audioFilePath, format="m4a")
+    elif (pathlib.Path(audioFilePath).suffix == ".wav"):
+        audio = AudioSegment.from_file(audioFilePath, format="wav") 
+    else:
+        print('ERROR, FILETYPE NOT SUPPORTED')
+
+    output = "project/output/output.wav"
+
+    audio.export(output, format="wav")
+
+
+    enroll(username, output)
