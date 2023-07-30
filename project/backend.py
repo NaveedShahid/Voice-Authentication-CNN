@@ -14,7 +14,7 @@ def enroll_user(username, audioFilePath):
     else:
         print('ERROR, FILETYPE NOT SUPPORTED')
 
-    output = "project/output/output.wav"
+    output = os.path.join("project/output", username + ".wav")
 
     audio.export(output, format="wav")
 

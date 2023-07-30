@@ -50,11 +50,11 @@ def enroll(name,file):
         outputs: None"""
 
     print("Loading model weights from [{}]....".format(p.MODEL_FILE))
-    try:
-        model = load_model(p.MODEL_FILE)
-    except:
-        print("Failed to load weights from the weights file, please ensure *.pb file is present in the MODEL_FILE directory")
-        exit()
+   # try:
+    model = load_model(p.MODEL_FILE)
+   # except:
+    #    print("Failed to load weights from the weights file, please ensure *.pb file is present in the MODEL_FILE directory")
+   #     exit()
     
    # try:
     print("Processing enroll sample....")

@@ -5,6 +5,7 @@ from .models import User
 from . import db
 from flask_login import login_user, login_required, logout_user
 import os
+import pathlib
 
 from project.backend import enroll_user
 
@@ -49,11 +50,6 @@ def signup_post():
     name = request.form.get('name').lower()
     password = request.form.get('password')
 
-    #Make sure there are no numbers in the username
-    if any(i.isdigit() for i in name):
-        flash('Do not include numbers in username')
-        return redirect(url_for('auth.signup'))
-
     user = User.query.filter_by(name=name).first() # if this returns a user, then the email already exists in database
 
     if user: # if a user is found, we want to redirect back to signup page so user can try again
@@ -61,24 +57,21 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # check if the post request has the file part
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
-    file = request.files['file']
-    # If the user does not select a file, the browser submits an
-    # empty file without a filename.
-    if file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
-    else:
-        flash('Error Uploading File')
-        return redirect(request.url)
-
-    enroll_user(name, os.path.join(UPLOAD_FOLDER, filename))
-    
+    for i, f in enumerate(request.files):
+        file = request.files[f]
+        if file.filename == '':
+            flash('Did not upload {file}')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = f"{name}{i}{pathlib.Path(file.filename).suffix}"
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+        else:
+            flash('Error Uploading File')
+            return redirect(request.url)
+        
+        enroll_user(f"{name}{i}", os.path.join(UPLOAD_FOLDER, filename))
+        os.remove(os.path.join(UPLOAD_FOLDER, filename))
+        
     # create a new user with the form data. Hash the password so the plaintext version isn't saved.
     new_user = User(name=name, password=generate_password_hash(password, method='sha256'))
 
