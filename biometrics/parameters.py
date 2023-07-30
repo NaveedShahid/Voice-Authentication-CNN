@@ -1,5 +1,3 @@
-from pyaudio import paInt16
-
 # Signal processing
 SAMPLE_RATE = 16000
 PREEMPHASIS_ALPHA = 0.97

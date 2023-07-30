@@ -5,4 +5,3 @@ python_speech_features
 keras
 tensorflow
 pandas
-pyaudio
