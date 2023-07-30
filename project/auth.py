@@ -55,7 +55,10 @@ def login_post():
         return redirect(request.url)
 
     #Perform Voice Biometrics on File
-    if (not authenticate_user(username, os.path.join(UPLOAD_FOLDER, filename))):
+    authenticated = authenticate_user(username, os.path.join(UPLOAD_FOLDER, filename))
+    os.remove(os.path.join(UPLOAD_FOLDER, filename))
+
+    if (not authenticated):
         flash(f'This Audio Recording was not verified as your voice. Please create a new clip and resubmit. Keep in mind, our beta voice biomteric only has 90% accuracy')
         return redirect(request.url)
 

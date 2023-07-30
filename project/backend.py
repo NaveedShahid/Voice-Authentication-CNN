@@ -33,5 +33,6 @@ def authenticate_user(username, audioFilePath):
     audio.export(output, format="wav")
 
     user = recognize(output)
+    os.remove(os.path.join("project/output", username + ".wav"))
 
     return username == user[:-1]
