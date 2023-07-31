@@ -91,7 +91,7 @@ def signup_post():
     for i, f in enumerate(request.files):
         file = request.files[f]
         if file.filename == '':
-            flash(f'Did not upload {file}')
+            flash('Did not upload all files.')
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = f"{name}{i}{pathlib.Path(file.filename).suffix}"
