@@ -82,6 +82,11 @@ def signup_post():
         flash('Username address already exists')
         return redirect(url_for('auth.signup'))
 
+    #Make sure there are no numbers in the username
+    if any(i.isdigit() for i in name):
+        flash('Do not include numbers in username')
+        return redirect(url_for('auth.signup'))
+
     # Enroll all submitted files into the AI
     for i, f in enumerate(request.files):
         file = request.files[f]
