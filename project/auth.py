@@ -20,7 +20,7 @@ def allowed_file(filename):
 
 @auth.route('/login')
 def login():
-    sentences = ["I am so excited for the SHTEM program this year.", "The quick brown fox jumped over the lazy dog.",
+    sentences = ["I'm extremely excited for the SHTEM program this year.", "The quick brown fox jumped over the lazy dog.",
                   "The hungry purple dinosaur ate the kind, zingy fox, the jabbering crab, and the mad whale.",
                 "With tenure, Suzie'd have all the more leisure for yachting, but her publications are no good.",
                 "The beige hue on the waters of the loch impressed all, including the French queen."]
