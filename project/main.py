@@ -8,8 +8,8 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/about')
-def about():
+@main.route('/intro')
+def intro():
     return render_template('intro.html')
 
 @main.route('/profile')
