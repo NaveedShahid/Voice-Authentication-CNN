@@ -8,9 +8,9 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/audio')
-def audio ():
-    return render_template('about.html')
+@main.route('/intro')
+def intro ():
+    return render_template('intro.html')
 
 @main.route('/profile')
 @login_required
