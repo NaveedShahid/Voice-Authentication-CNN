@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Login</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/login" enctype=multipart/form-data>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="username" name="username" placeholder="Your Username" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Your Password">
+                </div>
+            </div>
+
+            <p class="large-text">Create and upload an audio recording of your voice reading the sentence below to verify your identity.</p>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "{{sentence}}"</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type="file" name="file">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Login (Only Click Once)</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Sign Up</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/signup" enctype=multipart/form-data>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="field"></div>
+
+            <p class="large-text">Create and upload audio recordings of your voice reading the sentences below. You can use Voice Memos on Mac or Voice Record on Windows.</p>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "I'm extremely excited for the SHTEM program this year."</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type=file name=file1>
+                </div>
+            </div>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "The quick brown fox jumped over the lazy dog."</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type=file name=file2>
+                </div>
+            </div>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "The hungry purple dinosaur ate the kind, zingy fox, the jabbering crab, and the mad whale."</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type=file name=file3>
+                </div>
+            </div>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "With tenure, Suzie'd have all the more leisure for yachting, but her publications are no good."</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type=file name=file4>
+                </div>
+            </div>
+            <div class="field"></div>
+
+            <p class="large-text">Read: "The beige hue on the waters of the loch impressed all, including the French queen."</p>
+            <div class="field">
+                <div class="control">
+                    <input class="input" type=file name=file5>
+                </div>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Sign Up (Only Click Once)</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
